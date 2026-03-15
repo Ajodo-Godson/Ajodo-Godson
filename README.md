@@ -1,6 +1,5 @@
 # Godson Ajodo
-**Member of Technical Staff @ Efference AI**
-`Computational Sciences @ Minerva University`
+**CS Guy**
 
 ---
 
@@ -16,11 +15,6 @@
 [Play Chess](https://ajodo-godson.github.io/Ajodo-Godson/)
 <!-- CHESS-END -->
 ---
-
-### EXPERIENCE
-* **Member of Technical Staff** | Efference AI
-* **Data Engineer Intern** | Microsoft (Xbox Gaming Experimentation)
-* **Data Engineer Intern** | Microsoft (Sustainability)
 
 ### KERNEL_SPECS
 * **Languages:** `Python`, `C/C++`, `Rust`, `SQL`, `TypeScript`, `JavaScript`, `C#`, `KQL`
