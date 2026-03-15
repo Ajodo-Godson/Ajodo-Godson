@@ -13,7 +13,6 @@
 
 **SESSION_LOG:** White to move.
 
-[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Reset)
 [Play Chess](https://ajodo-godson.github.io/Ajodo-Godson/)
 <!-- CHESS-END -->
 ---
