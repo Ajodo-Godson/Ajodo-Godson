@@ -8,7 +8,7 @@
 *Shared state session. Any visitor can execute the next move.*
 
 <!-- CHESS-START -->
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Chess_starting_position_3.svg" width="400" alt="Chess Board" />
+![Chess Board](data/chess_board.svg)
 
 **SESSION_LOG:** System online. White to move.
 
