@@ -37,7 +37,8 @@ if "Move" in issue_title:
         move = board.parse_san(move_san)
         if move in board.legal_moves:
             board.push(move)
-            status = f"Last move: {move_san}. Next turn: {'Black' if board.turn == chess.BLACK else 'White'}."
+            turn = "Black" if board.turn == chess.BLACK else "White"
+            status = f"Last move: {move_san}. Next turn: {turn}."
         else:
             status = f"Illegal move: {move_san}."
     except:
@@ -64,8 +65,8 @@ end_idx = content.find(END_TAG)
 
 new_content = content[:start_idx] + \
               f"\n\n{board_render}\n\n**SESSION_LOG:** {status}\n\n" + \
-              "[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | " + \
-              "[Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)\n" + \
+              f"[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | " + \
+              f"[Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)\n" + \
               content[end_idx:]
 
 with open(README_PATH, "w") as f:
