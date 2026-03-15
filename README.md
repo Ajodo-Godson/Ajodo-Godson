@@ -11,7 +11,7 @@
 
 ![Chess Board](data/chess_board.svg)
 
-**SESSION_LOG:** White to move.
+**SESSION_LOG:** Last move: e4. Next turn: Black.
 
 [Play Chess](https://ajodo-godson.github.io/Ajodo-Godson/)
 <!-- CHESS-END -->
