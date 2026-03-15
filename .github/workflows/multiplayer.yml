@@ -1,29 +1,41 @@
 name: Multiplayer Games
+
 on:
   issues:
     types: [opened]
+
+permissions:
+  contents: write
 
 jobs:
   update_game:
     runs-on: ubuntu-latest
     if: startsWith(github.event.issue.title, 'Game:')
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          python-version: '3.x'
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
       - name: Install dependencies
         run: pip install -r requirements.txt
+
       - name: Run Game Logic
-        run: python game_engine.py
         env:
           ISSUE_TITLE: ${{ github.event.issue.title }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Sync Profile
+        run: python game_engine.py
+
+      - name: Commit and push changes
         run: |
           git config --global user.name "system-bot"
           git config --global user.email "bot@github.com"
-          git add .
+          git add README.md data/game_state.pgn data/chess_board.svg
           git commit -m "System: User move processed" || exit 0
           git push
