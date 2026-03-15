@@ -6,7 +6,7 @@
     <title>Multiplayer Chess · Ajodo-Godson</title>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/css/chessboard-1.0.0.min.css"
+      href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
     />
     <style>
       :root {
@@ -202,8 +202,8 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chess.js@0.13.4/chess.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/js/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
     <script>
       const REPO = "Ajodo-Godson/Ajodo-Godson";
       const ISSUE_BASE = `https://github.com/${REPO}/issues/new?title=`;
@@ -254,6 +254,7 @@
           position: state.fen,
           draggable: true,
           dropOffBoard: "snapback",
+          pieceTheme: "https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png",
           onDrop,
           onSnapEnd,
         });
