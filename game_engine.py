@@ -13,6 +13,7 @@ issue_title = os.environ.get("ISSUE_TITLE", "")
 ISSUES_NEW_URL = f"{repo.html_url}/issues/new"
 
 GAME_STATE_FILE = "data/game_state.pgn"
+BOARD_SVG_PATH = "data/chess_board.svg"
 README_PATH = "README.md"
 # Delimiters for the README section that is rewritten each run.
 START_TAG = "<!-- CHESS-START -->"
@@ -33,8 +34,13 @@ if os.path.exists(GAME_STATE_FILE):
 
 # Process Input
 status = "White to move."
-if "Move" in issue_title:
-    move_san = issue_title.split("Move ")[-1].strip()
+next_move_title = quote_plus("Game: Move YOUR_MOVE")
+reset_title = quote_plus("Game: Reset")
+next_move_link = f"[Next Move]({ISSUES_NEW_URL}?title={next_move_title})"
+reset_link = f"[Reset]({ISSUES_NEW_URL}?title={reset_title})"
+
+if issue_title.startswith("Game: Move "):
+    move_san = issue_title.replace("Game: Move ", "", 1).strip()
     try:
         move = board.parse_san(move_san)
         if move in board.legal_moves:
@@ -43,9 +49,9 @@ if "Move" in issue_title:
             status = f"Last move: {move_san}. Next turn: {turn}."
         else:
             status = f"Illegal move: {move_san}."
-    except:
+    except ValueError:
         status = "Invalid syntax. Use SAN (e.g., e4, Nf3)."
-elif "Reset" in issue_title:
+elif issue_title.strip() == "Game: Reset":
     board.reset()
     status = "Game reset. White to move."
 
