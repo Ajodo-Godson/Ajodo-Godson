@@ -8,9 +8,10 @@
 *Shared state session. Any visitor can execute the next move.*
 
 <!-- CHESS-START -->
+
 ![Chess Board](data/chess_board.svg)
 
-**SESSION_LOG:** System online. White to move.
+**SESSION_LOG:** White to move.
 
 [Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Reset)
 <!-- CHESS-END -->
