@@ -3,6 +3,13 @@ name: Multiplayer Games
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+  push:
+    paths:
+      - "game_engine.py"
+      - "README.md"
+      - "requirements.txt"
+      - ".github/workflows/multiplayer.yml"
 
 permissions:
   contents: write
@@ -10,7 +17,9 @@ permissions:
 jobs:
   update_game:
     runs-on: ubuntu-latest
-    if: startsWith(github.event.issue.title, 'Game:')
+    if: >
+      github.event_name != 'issues' ||
+      startsWith(github.event.issue.title, 'Game:')
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,15 +29,15 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          python-version: "3.11"
+          cache: "pip"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Run Game Logic
         env:
-          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_TITLE: ${{ github.event.issue.title || '' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python game_engine.py
 
