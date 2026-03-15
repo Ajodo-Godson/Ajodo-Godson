@@ -1,10 +1,30 @@
-- 👋 Hi, I’m @Ajodo-Godson
-- 👀 I’m interested in Mathematics, Sciences and of course... Programming - Competitive programming and Software engineering
-- 🌱 I’m into software development data science.
-- - 💞️ I’m looking to collaborate on anything that has to do with Sciences, Maths and Interesting Projects.
-- 📫 You can reach me on discord @Ajoson#7248
+# Godson Ajodo
+**Member of Technical Staff @ Efference AI**
+`Computational Sciences @ Minerva University`
 
-<!---
-Ajodo-Godson/Ajodo-Godson is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-You can click the Preview link to take a look at your changes.
---->
+---
+
+### ACTIVE_SESSION: MULTIPLAYER_CHESS
+*Shared state session. Any visitor can execute the next move.*
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Chess_starting_position_3.svg" width="400" alt="Chess Board" />
+
+**SESSION_LOG:** System online. White to move.
+
+[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)
+---
+
+### EXPERIENCE
+* **Member of Technical Staff** | Efference AI
+* **Data Engineer Intern** | Microsoft (Xbox Gaming Experimentation)
+* **Data Engineer Intern** | Microsoft (Sustainability Engineering)
+
+### KERNEL_SPECS
+* **Languages:** `Python`, `C/C++`, `Rust`, `SQL`, `TypeScript`, `JavaScript`, `C#`, `KQL`
+* **Frameworks:** `React`, `Next.js`, `FastAPI`, `Flask`, `PyTorch`, `TensorFlow`
+* **Deep Learning:** `CNN`, `RNN`, `LSTM`, `OpenCV`, `Hugging Face`, `World Models`
+* **Robotics & Systems:** `Robotic Data Pipelines`, `Protocols (BT/Wi-Fi)`, `Docker`, `Kubernetes`, `AWS`, `Azure`
+* **Distributed Infra:** `Spark`, `Hadoop`, `Redis`, `Airflow`, `Vector Similarity Search`
+
+---
+`Discord: @Ajoson#7248` | `San Francisco, CA`
