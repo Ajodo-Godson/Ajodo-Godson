@@ -13,8 +13,9 @@ issue_title = os.environ.get("ISSUE_TITLE", "")
 
 GAME_STATE_FILE = "data/game_state.pgn"
 README_PATH = "README.md"
-START_TAG = ""
-END_TAG = ""
+# Delimiters for the README section that is rewritten each run.
+START_TAG = "<!-- CHESS-START -->"
+END_TAG = "<!-- CHESS-END -->"
 
 if not os.path.exists("data"):
     os.makedirs("data")
@@ -60,8 +61,15 @@ board_render = f'<img src="data:image/svg+xml;base64,{encoded}" width="400" />'
 with open(README_PATH, "r") as f:
     content = f.read()
 
-start_idx = content.find(START_TAG) + len(START_TAG)
+start_idx = content.find(START_TAG)
 end_idx = content.find(END_TAG)
+
+if start_idx == -1 or end_idx == -1 or end_idx <= start_idx:
+    raise ValueError(
+        "README markers not found. Add <!-- CHESS-START --> and <!-- CHESS-END --> markers."
+    )
+
+start_idx += len(START_TAG)
 
 new_content = content[:start_idx] + \
               f"\n\n{board_render}\n\n**SESSION_LOG:** {status}\n\n" + \

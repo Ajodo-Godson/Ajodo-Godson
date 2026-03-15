@@ -7,11 +7,13 @@
 ### ACTIVE_SESSION: MULTIPLAYER_CHESS
 *Shared state session. Any visitor can execute the next move.*
 
+<!-- CHESS-START -->
 <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Chess_starting_position_3.svg" width="400" alt="Chess Board" />
 
 **SESSION_LOG:** System online. White to move.
 
 [Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)
+<!-- CHESS-END -->
 ---
 
 ### EXPERIENCE
