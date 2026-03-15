@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplayer Chess · Ajodo-Godson</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/css/chessboard-1.0.0.min.css"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --panel: #161b22;
+        --text: #c9d1d9;
+        --muted: #8b949e;
+        --accent: #58a6ff;
+        --danger: #f85149;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+          Apple Color Emoji, Segoe UI Emoji;
+        background: radial-gradient(circle at top, #111827 0%, var(--bg) 55%);
+        color: var(--text);
+        min-height: 100vh;
+      }
+
+      .container {
+        width: min(960px, 92vw);
+        margin: 36px auto;
+      }
+
+      .card {
+        background: color-mix(in oklab, var(--panel), black 8%);
+        border: 1px solid #30363d;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: clamp(1.25rem, 2.5vw, 1.8rem);
+      }
+
+      .sub {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 560px) 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+
+      #board {
+        width: 100%;
+        max-width: 560px;
+      }
+
+      .meta {
+        display: grid;
+        gap: 10px;
+      }
+
+      .pill {
+        background: #0b1220;
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        padding: 10px 12px;
+        font-size: 0.95rem;
+      }
+
+      .label {
+        color: var(--muted);
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      button,
+      a.btn {
+        border: 1px solid #30363d;
+        border-radius: 10px;
+        background: #21262d;
+        color: var(--text);
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      button.primary {
+        background: color-mix(in oklab, var(--accent), black 70%);
+        border-color: color-mix(in oklab, var(--accent), black 55%);
+      }
+
+      button.danger {
+        background: color-mix(in oklab, var(--danger), black 75%);
+        border-color: color-mix(in oklab, var(--danger), black 55%);
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(1, 4, 9, 0.76);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+      }
+
+      .overlay.show {
+        display: flex;
+      }
+
+      .dialog {
+        width: min(520px, 94vw);
+        background: var(--panel);
+        border: 1px solid #30363d;
+        border-radius: 14px;
+        padding: 18px;
+      }
+
+      .dialog h2 {
+        margin-top: 0;
+      }
+
+      .dialog p {
+        color: var(--muted);
+      }
+
+      .dialog .actions {
+        justify-content: flex-end;
+      }
+
+      @media (max-width: 800px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>♟ Multiplayer Chess</h1>
+        <p class="sub">Drag a piece, confirm the move, then submit the auto-filled GitHub issue.</p>
+
+        <div class="layout">
+          <div id="board" aria-label="Chess board"></div>
+
+          <aside class="meta">
+            <div class="pill">
+              <div class="label">Status</div>
+              <div id="status">Loading game state...</div>
+            </div>
+            <div class="pill">
+              <div class="label">Last move</div>
+              <div id="last-move">—</div>
+            </div>
+            <div class="pill">
+              <div class="label">How it works</div>
+              Move validation is client-side. On confirmation, you are redirected to a pre-filled issue.
+            </div>
+            <div class="actions">
+              <button id="reset-btn" class="danger" type="button">Reset Game</button>
+              <a class="btn" href="https://github.com/Ajodo-Godson/Ajodo-Godson/issues" target="_blank" rel="noreferrer">View Issues</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div class="overlay" id="confirm-overlay" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <div class="dialog">
+        <h2 id="confirm-title">Confirm move</h2>
+        <p id="confirm-text"></p>
+        <div class="actions">
+          <button id="cancel-btn" type="button">Cancel</button>
+          <button id="submit-btn" class="primary" type="button">Create GitHub Issue</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chess.js@0.13.4/chess.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chessboardjs@1.0.0/www/js/chessboard-1.0.0.min.js"></script>
+    <script>
+      const REPO = "Ajodo-Godson/Ajodo-Godson";
+      const ISSUE_BASE = `https://github.com/${REPO}/issues/new?title=`;
+
+      const statusEl = document.getElementById("status");
+      const lastMoveEl = document.getElementById("last-move");
+      const overlay = document.getElementById("confirm-overlay");
+      const confirmText = document.getElementById("confirm-text");
+      const submitBtn = document.getElementById("submit-btn");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const resetBtn = document.getElementById("reset-btn");
+
+      let game = null;
+      let board = null;
+      let pendingSan = null;
+
+      const openOverlay = () => overlay.classList.add("show");
+      const closeOverlay = () => overlay.classList.remove("show");
+
+      const issueUrlForTitle = (title) => ISSUE_BASE + encodeURIComponent(title).replace(/%20/g, "+");
+
+      const onDrop = (source, target) => {
+        const move = game.move({ from: source, to: target, promotion: "q" });
+        if (!move) return "snapback";
+
+        pendingSan = move.san;
+        confirmText.textContent = `Submit move ${move.san}? This opens a pre-filled issue.`;
+        openOverlay();
+        return undefined;
+      };
+
+      const onSnapEnd = () => {
+        board.position(game.fen());
+      };
+
+      const updateMeta = (state) => {
+        statusEl.textContent = state.status || "White to move.";
+        lastMoveEl.textContent = state.lastMove || "—";
+      };
+
+      async function init() {
+        const resp = await fetch("./state.json", { cache: "no-store" });
+        const state = await resp.json();
+
+        game = new Chess(state.fen);
+
+        board = Chessboard("board", {
+          position: state.fen,
+          draggable: true,
+          dropOffBoard: "snapback",
+          onDrop,
+          onSnapEnd,
+        });
+
+        updateMeta(state);
+      }
+
+      submitBtn.addEventListener("click", () => {
+        if (!pendingSan) return closeOverlay();
+        const title = `Game: Move ${pendingSan}`;
+        window.location.href = issueUrlForTitle(title);
+      });
+
+      cancelBtn.addEventListener("click", () => {
+        if (pendingSan) {
+          game.undo();
+          board.position(game.fen());
+        }
+        pendingSan = null;
+        closeOverlay();
+      });
+
+      resetBtn.addEventListener("click", () => {
+        window.location.href = issueUrlForTitle("Game: Reset");
+      });
+
+      init().catch(() => {
+        statusEl.textContent = "Failed to load board state. Please refresh in a few seconds.";
+      });
+    </script>
+  </body>
+</html>

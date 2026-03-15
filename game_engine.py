@@ -1,5 +1,6 @@
 import os
 import io
+import json
 from urllib.parse import quote_plus, unquote_plus
 
 import chess
@@ -15,6 +16,7 @@ REPO_FULL_NAME = "Ajodo-Godson/Ajodo-Godson"
 GAME_STATE_FILE = "data/game_state.pgn"
 BOARD_SVG_PATH = "data/chess_board.svg"
 README_PATH = "README.md"
+FRONTEND_STATE_PATH = "docs/state.json"
 
 START_TAG = "<!-- CHESS-START -->"
 END_TAG = "<!-- CHESS-END -->"
@@ -25,6 +27,10 @@ END_TAG = "<!-- CHESS-END -->"
 # ----------------------------
 def ensure_data_dir() -> None:
     os.makedirs("data", exist_ok=True)
+
+
+def ensure_docs_dir() -> None:
+    os.makedirs("docs", exist_ok=True)
 
 
 def load_board() -> chess.Board:
@@ -89,19 +95,22 @@ def save_state(board: chess.Board) -> None:
         f.write(svg_data)
 
 
-def build_links(repo_html_url: str) -> tuple[str, str]:
-    issues_new_url = f"{repo_html_url}/issues/new"
-
-    # GitHub prefill works reliably with + for spaces
-    next_move_title = quote_plus("Game: Move YOUR_MOVE")
-    reset_title = quote_plus("Game: Reset")
-
-    next_move_link = f"[Next Move]({issues_new_url}?title={next_move_title})"
-    reset_link = f"[Reset]({issues_new_url}?title={reset_title})"
-    return next_move_link, reset_link
+def save_frontend_state(board: chess.Board, status: str, last_move: str | None) -> None:
+    payload = {
+        "fen": board.fen(),
+        "status": status,
+        "lastMove": last_move or "",
+    }
+    with open(FRONTEND_STATE_PATH, "w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2)
 
 
-def update_readme(status: str, next_move_link: str, reset_link: str) -> None:
+def build_play_link(repo_html_url: str) -> str:
+    pages_url = "https://ajodo-godson.github.io/Ajodo-Godson/"
+    return f"[Play Chess]({pages_url})"
+
+
+def update_readme(status: str, play_link: str) -> None:
     with open(README_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
@@ -119,7 +128,7 @@ def update_readme(status: str, next_move_link: str, reset_link: str) -> None:
     replacement = (
         f"\n\n{board_render}\n\n"
         f"**SESSION_LOG:** {status}\n\n"
-        f"{next_move_link} | {reset_link}\n"
+        f"{play_link}\n"
     )
 
     new_content = content[:start_idx] + replacement + content[end_idx:]
@@ -133,6 +142,7 @@ def update_readme(status: str, next_move_link: str, reset_link: str) -> None:
 # ----------------------------
 def main() -> None:
     ensure_data_dir()
+    ensure_docs_dir()
 
     token = os.environ.get("GITHUB_TOKEN")
     issue_title = os.environ.get("ISSUE_TITLE", "")
@@ -144,11 +154,17 @@ def main() -> None:
     repo = g.get_repo(REPO_FULL_NAME)
 
     board = load_board()
+    normalized_title = normalize_issue_title(issue_title)
+    last_move = ""
+    if normalized_title.startswith("Game: Move "):
+        last_move = normalized_title.replace("Game: Move ", "", 1).strip()
+
     status = process_issue(board, issue_title)
     save_state(board)
+    save_frontend_state(board, status, last_move)
 
-    next_move_link, reset_link = build_links(repo.html_url)
-    update_readme(status, next_move_link, reset_link)
+    play_link = build_play_link(repo.html_url)
+    update_readme(status, play_link)
 
 
 if __name__ == "__main__":

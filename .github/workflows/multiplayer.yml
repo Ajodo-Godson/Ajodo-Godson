@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   update_game:
@@ -45,6 +46,6 @@ jobs:
         run: |
           git config --global user.name "system-bot"
           git config --global user.email "bot@github.com"
-          git add README.md data/game_state.pgn data/chess_board.svg
+          git add README.md data/game_state.pgn data/chess_board.svg docs/state.json
           git commit -m "System: User move processed" || exit 0
           git push
