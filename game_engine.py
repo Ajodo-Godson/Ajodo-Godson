@@ -3,18 +3,21 @@ import chess
 import chess.svg
 import chess.pgn
 import io
-import base64
+from urllib.parse import quote_plus
 from github import Github
 
 # Initialize Environment
 g = Github(os.environ["GITHUB_TOKEN"])
 repo = g.get_repo("Ajodo-Godson/Ajodo-Godson")
 issue_title = os.environ.get("ISSUE_TITLE", "")
+ISSUES_NEW_URL = f"{repo.html_url}/issues/new"
 
 GAME_STATE_FILE = "data/game_state.pgn"
 README_PATH = "README.md"
-START_TAG = ""
-END_TAG = ""
+BOARD_SVG_PATH = "data/chess_board.svg"
+# Delimiters for the README section that is rewritten each run.
+START_TAG = "<!-- CHESS-START -->"
+END_TAG = "<!-- CHESS-END -->"
 
 if not os.path.exists("data"):
     os.makedirs("data")
@@ -51,22 +54,35 @@ elif "Reset" in issue_title:
 with open(GAME_STATE_FILE, "w") as f:
     print(chess.pgn.Game.from_board(board), file=f)
 
-# Render SVG to Base64
-svg_data = chess.svg.board(board=board, size=400).encode("utf-8")
-encoded = base64.b64encode(svg_data).decode("utf-8")
-board_render = f'<img src="data:image/svg+xml;base64,{encoded}" width="400" />'
+# Render board SVG as a tracked file GitHub can display in README.
+svg_data = chess.svg.board(board=board, size=400)
+with open(BOARD_SVG_PATH, "w") as f:
+    f.write(svg_data)
+
+board_render = "![Chess Board](data/chess_board.svg)"
 
 # Update README
 with open(README_PATH, "r") as f:
     content = f.read()
 
-start_idx = content.find(START_TAG) + len(START_TAG)
+start_idx = content.find(START_TAG)
 end_idx = content.find(END_TAG)
+
+if start_idx == -1 or end_idx == -1 or end_idx <= start_idx:
+    raise ValueError(
+        "README markers not found. Add <!-- CHESS-START --> and <!-- CHESS-END --> markers."
+    )
+
+start_idx += len(START_TAG)
+
+next_move_title = quote_plus("Game: Move YOUR_MOVE")
+reset_title = quote_plus("Game: Reset")
+next_move_link = f"[Next Move]({ISSUES_NEW_URL}?title={next_move_title})"
+reset_link = f"[Reset]({ISSUES_NEW_URL}?title={reset_title})"
 
 new_content = content[:start_idx] + \
               f"\n\n{board_render}\n\n**SESSION_LOG:** {status}\n\n" + \
-              f"[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | " + \
-              f"[Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)\n" + \
+              f"{next_move_link} | {reset_link}\n" + \
               content[end_idx:]
 
 with open(README_PATH, "w") as f:
