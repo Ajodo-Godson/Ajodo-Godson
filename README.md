@@ -20,13 +20,13 @@
 ### EXPERIENCE
 * **Member of Technical Staff** | Efference AI
 * **Data Engineer Intern** | Microsoft (Xbox Gaming Experimentation)
-* **Data Engineer Intern** | Microsoft (Sustainability Engineering)
+* **Data Engineer Intern** | Microsoft (Sustainability)
 
 ### KERNEL_SPECS
 * **Languages:** `Python`, `C/C++`, `Rust`, `SQL`, `TypeScript`, `JavaScript`, `C#`, `KQL`
 * **Frameworks:** `React`, `Next.js`, `FastAPI`, `Flask`, `PyTorch`, `TensorFlow`
-* **Deep Learning:** `CNN`, `RNN`, `LSTM`, `OpenCV`, `Hugging Face`, `World Models`
-* **Robotics & Systems:** `Robotic Data Pipelines`, `Protocols (BT/Wi-Fi)`, `Docker`, `Kubernetes`, `AWS`, `Azure`
+* **Deep Learning:** `Generative World Models`, `Neural Architectures`, `Image/Video Databases`, `OpenCV`, `Hugging Face`, 
+* **Robotics & Systems:** `Robotic Data Pipelines`, `Protocols (BT/Wi-Fi)`, `Docker`, `Kubernetes`, `AWS`, `Azure`, `Teleoperation`,
 * **Distributed Infra:** `Spark`, `Hadoop`, `Redis`, `Airflow`, `Vector Similarity Search`
 
 ---
