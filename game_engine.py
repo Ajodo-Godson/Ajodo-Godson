@@ -14,7 +14,6 @@ ISSUES_NEW_URL = f"{repo.html_url}/issues/new"
 
 GAME_STATE_FILE = "data/game_state.pgn"
 README_PATH = "README.md"
-BOARD_SVG_PATH = "data/chess_board.svg"
 # Delimiters for the README section that is rewritten each run.
 START_TAG = "<!-- CHESS-START -->"
 END_TAG = "<!-- CHESS-END -->"
@@ -74,11 +73,6 @@ if start_idx == -1 or end_idx == -1 or end_idx <= start_idx:
     )
 
 start_idx += len(START_TAG)
-
-next_move_title = quote_plus("Game: Move YOUR_MOVE")
-reset_title = quote_plus("Game: Reset")
-next_move_link = f"[Next Move]({ISSUES_NEW_URL}?title={next_move_title})"
-reset_link = f"[Reset]({ISSUES_NEW_URL}?title={reset_title})"
 
 new_content = content[:start_idx] + \
               f"\n\n{board_render}\n\n**SESSION_LOG:** {status}\n\n" + \

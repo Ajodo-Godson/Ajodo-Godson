@@ -12,7 +12,7 @@
 
 **SESSION_LOG:** System online. White to move.
 
-[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game%3A+Reset)
+[Next Move](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Move+YOUR_MOVE) | [Reset](https://github.com/Ajodo-Godson/Ajodo-Godson/issues/new?title=Game:+Reset)
 <!-- CHESS-END -->
 ---
 
