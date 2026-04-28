@@ -1,5 +1,5 @@
 {
-  "fen": "r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3",
-  "status": "Last move: Nc6. Next turn: White.",
-  "lastMove": "Nc6"
+  "fen": "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3",
+  "status": "Last move: Bb5. Next turn: Black.",
+  "lastMove": "Bb5"
 }
