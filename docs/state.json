@@ -1,5 +1,5 @@
 {
   "fen": "r1bqk1nr/pppp1ppp/2nb4/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4",
-  "status": "Last move: Bd6. Next turn: White.",
+  "status": "Invalid syntax. Use SAN (e.g., e4, Nf3, O-O).",
   "lastMove": "Bd6"
 }

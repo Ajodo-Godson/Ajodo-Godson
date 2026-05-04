@@ -10,7 +10,7 @@
 
 ![Chess Board](data/chess_board.svg)
 
-**SESSION_LOG:** Last move: Bd6. Next turn: White.
+**SESSION_LOG:** Invalid syntax. Use SAN (e.g., e4, Nf3, O-O).
 
 [Play Chess](https://ajodo-godson.github.io/Ajodo-Godson/)
 <!-- CHESS-END -->
