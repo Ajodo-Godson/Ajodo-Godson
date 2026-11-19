@@ -10,7 +10,7 @@
 
 ![Chess Board](data/chess_board.svg)
 
-**SESSION_LOG:** Last move: Nd4. Next turn: White.
+**SESSION_LOG:** Last move: Nc3. Next turn: Black.
 
 [Play Chess](https://ajodo-godson.github.io/Ajodo-Godson/)
 <!-- CHESS-END -->
